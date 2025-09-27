@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -18,43 +18,86 @@ import { Label } from "@/components/shadcn/label";
 import { FieldErrorMessage } from "@/components/common/form-item/field-error-message";
 
 interface ComboboxItem {
+    /** 選択肢の実際の値。フォーム送信時などに使用されます。 */
     value: string;
+    /** 選択肢として表示されるラベルテキスト。 */
     label: string;
 }
 
 interface ComboboxFieldProps {
-    /** コンボボックスとラベルの関連付けに使うID */
+    /** `Label` と入力要素を関連付けるための一意なID。 */
     id: string;
-    /** ラベルに表示するテキスト */
+    /** フィールドのラベルとして表示されるテキスト。 */
     label: string;
-    /** 選択肢の配列 */
+    /** コンボボックスに表示する選択肢の配列。 */
     items: ComboboxItem[];
 
-    /** 未選択時に表示するプレースホルダー */
+    /** 何も選択されていないときにトリガーボタンに表示されるプレースホルダー。 */
     placeholder?: string;
-    /** 検索入力のプレースホルダー */
+    /** 検索入力欄に表示されるプレースホルダー。 */
     searchPlaceholder?: string;
-    /** 検索結果がない場合に表示するメッセージ */
+    /** 検索結果が一件も見つからなかった場合に表示されるメッセージ。 */
     emptyMessage?: string;
-    /** 初期選択値 */
+    /** 初期状態で選択されている項目の `value`。 */
     defaultValue?: string;
 
-    /** 横並びにするかどうか（スマホは縦並び固定） */
+    /** `true` の場合、ラベルと入力欄を横並びに配置します（デスクトップ表示）。 */
     isHorizontal?: boolean;
-    /** 横並び時のラベル列数 (1〜12, デフォルト: 3) */
+    /** 横並び時のラベルが占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     labelCol?: number;
-    /** 横並び時の入力欄列数 (1〜12, デフォルト: 9) */
+    /** 横並び時の入力欄が占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     inputCol?: number;
 
-    /** ラベルに追加するCSSクラス */
+    /** `Label` コンポーネントに適用するCSSクラス。 */
     labelClassName?: string;
-    /** ボタンに追加するCSSクラス */
+    /** トリガーとなる `Button` コンポーネントに適用するCSSクラス。 */
     buttonClassName?: string;
 
-    /** エラーメッセージ（複数行対応） */
+    /** フィールドの下に表示するエラーメッセージの配列。 */
     errorMsg?: string[];
 }
 
+/**
+ * @component ComboboxField
+ * @description 検索可能なドロップダウンリストを持つコンボボックスフィールドです。
+ *
+ * ## 機能
+ * - `Popover` 内に `Command` コンポーネントを表示し、選択肢の検索と選択が可能です。
+ * - ラベルと入力欄の縦横レイアウト切り替えに対応しています。
+ * - エラーメッセージ表示をサポートします。
+ *
+ * ## 依存関係
+ * - `lucide-react` (Check, ChevronsUpDown)
+ * - `shadcn/ui` (Button, Command, Popover, Label)
+ * - `FieldErrorMessage`
+ *
+ * ## 状態管理
+ * - 選択された値 (`value`) と `Popover` の開閉状態 (`open`) を内部の `useState` で管理しています。
+ * - 現状は非制御コンポーネントとしての実装です。
+ *
+ * ## フォーム連携
+ * - `name` 属性を持つ `input[type="hidden"]` が含まれており、フォーム送信時に選択された値を送信します。
+ *
+ * @example
+ * ```tsx
+ * const frameworks = [
+ *   { value: "next.js", label: "Next.js" },
+ *   { value: "remix", label: "Remix" },
+ *   { value: "astro", label: "Astro" },
+ * ];
+ *
+ * <ComboboxField
+ *   id="framework"
+ *   label="フレームワーク"
+ *   items={frameworks}
+ *   placeholder="選択してください..."
+ *   searchPlaceholder="検索..."
+ *   emptyMessage="見つかりません。"
+ *   defaultValue="next.js"
+ *   isHorizontal={true}
+ * />
+ * ```
+ */
 export function ComboboxField({
     id,
     label,

@@ -10,46 +10,73 @@ import { FieldErrorMessage } from "@/components/common/form-item/field-error-mes
 import { cn } from "@/lib/utils";
 
 interface SelectFieldProps {
-    /** セレクトボックスとラベルの関連付けに使うID */
+    /** `Label` と `Select` を関連付けるための一意なID。 */
     id: string;
-    /** ラベルに表示するテキスト */
+    /** フィールドのラベルとして表示されるテキスト。 */
     label: string;
 
-    /** 横並びにするかどうか（スマホは縦並び固定） */
+    /** `true` の場合、ラベルと入力欄を横並びに配置します（デスクトップ表示）。 */
     isHorizontal?: boolean;
-    /** 横並び時のラベル列数 (1〜12, デフォルト: 3) */
+    /** 横並び時のラベルが占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     labelCol?: number;
-    /** 横並び時の入力欄列数 (1〜12, デフォルト: 9) */
+    /** 横並び時の入力欄が占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     inputCol?: number;
 
-    /** ラベルに追加するCSSクラス */
+    /** `Label` コンポーネントに適用するCSSクラス。 */
     labelClassName?: string;
-    /** セレクトボックスに追加するCSSクラス */
+    /** `SelectTrigger` コンポーネントに適用するCSSクラス。 */
     selectTriggerClassName?: string;
-    /** セレクトボックスに追加するCSSクラス */
+    /** `SelectContent` コンポーネントに適用するCSSクラス。 */
     selectContentClassName?: string;
-    /** セレクトボックスに追加するCSSクラス */
+    /** `SelectItem` コンポーネントに適用するCSSクラス。 */
     selectItemClassName?: string;
 
-    /** セレクトボックス未選択時に表示するプレースホルダー */
+    /** 何も選択されていないときに `SelectTrigger` に表示されるプレースホルダー。 */
     placeholder?: string;
-    /** 未選択用に先頭に追加する項目のラベル */
+    /** 選択肢の先頭に「未選択」などの項目を追加する場合、そのラベルを指定します。 */
     unselectedOptionLabel?: string;
-    /** 選択肢の配列。`selectId` が値、`label` が表示名 */
+    /** `Select` に表示する選択肢の配列。 */
     items: { selectId: string; label: string }[];
-    /** 初期選択値（`selectId` に一致する値） */
+    /** `Select` の初期値（非制御用）。`selectId` と一致する値を指定します。 */
     defaultValue?: string;
-    /** 入力値 */
+    /** `Select` の値を外部から制御する場合に指定します（制御用）。 */
     value?: string;
 
-    /** エラーメッセージ（複数行対応） */
+    /** フィールドの下に表示するエラーメッセージの配列。 */
     errorMsg?: string[];
 }
 
 /**
- * 汎用セレクトフィールド
+ * @component SelectField
+ * @description ラベル付きの汎用セレクトボックス（ドロップダウン）フィールドです。
  *
- * 縦横切り替え対応、スマホは常に縦並び。
+ * ## 機能
+ * - `items` 配列に基づいて、選択肢を動的に生成します。
+ * - ラベルと入力欄の縦横レイアウト切り替えに対応しています。
+ * - 制御コンポーネントと非制御コンポーネントの両方のモードをサポートします。
+ * - エラーメッセージ表示をサポートします。
+ *
+ * ## 依存関係
+ * - `shadcn/ui` (Select, Label)
+ * - `FieldErrorMessage`
+ *
+ * @example
+ * ```tsx
+ * const fruits = [
+ *   { selectId: "apple", label: "リンゴ" },
+ *   { selectId: "banana", label: "バナナ" },
+ * ];
+ *
+ * // 非制御コンポーネントとして使用
+ * <SelectField
+ *   id="fruit"
+ *   label="果物"
+ *   items={fruits}
+ *   placeholder="選択してください"
+ *   defaultValue="banana"
+ *   isHorizontal={true}
+ * />
+ * ```
  */
 export function SelectField({
     id,

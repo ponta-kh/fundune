@@ -4,40 +4,70 @@ import { FieldErrorMessage } from "@/components/common/form-item/field-error-mes
 import { cn } from "@/lib/utils";
 
 interface TextareaFieldProps {
-    /** テキストエリアとラベルの関連付けに使うID */
+    /** `Label` と `Textarea` を関連付けるための一意なID。 */
     id: string;
-    /** ラベルに表示するテキスト */
+    /** フィールドのラベルとして表示されるテキスト。 */
     label: string;
 
-    /** プレースホルダーテキスト */
+    /** `Textarea` に表示されるプレースホルダーテキスト。 */
     placeholder?: string;
-    /** 初期値 */
+    /** `Textarea` の初期値を定義します（非制御用）。 */
     defaultValue?: string;
-    /** 入力値 */
+    /** `Textarea` の値を外部から制御する場合に指定します（制御用）。 */
     value?: string;
-    /** 読み取り専用にするかどうか（デフォルト: false） */
+    /** `true` の場合、`Textarea` を読み取り専用にします。 */
     isReadonly?: boolean;
 
-    /** 横並びにするかどうか（スマホは縦並び固定） */
+    /** `true` の場合、ラベルと入力欄を横並びに配置します（デスクトップ表示）。 */
     isHorizontal?: boolean;
-    /** 横並び時のラベル列数 (1〜12, デフォルト: 3) */
+    /** 横並び時のラベルが占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     labelCol?: number;
-    /** 横並び時の入力欄列数 (1〜12, デフォルト: 9) */
+    /** 横並び時の入力欄が占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     inputCol?: number;
 
-    /** ラベルに追加するCSSクラス */
+    /** `Label` コンポーネントに適用するCSSクラス。 */
     labelClassName?: string;
-    /** テキストエリアに追加するCSSクラス */
+    /** `Textarea` コンポーネントに適用するCSSクラス。 */
     textareaClassName?: string;
 
-    /** エラーメッセージ（複数行対応） */
+    /** フィールドの下に表示するエラーメッセージの配列。 */
     errorMsg?: string[];
 }
 
 /**
- * 汎用テキストエリアフィールド
+ * @component TextareaField
+ * @description ラベル付きの汎用テキストエリアフィールドです。
  *
- * 縦横切り替え対応、スマホは常に縦並び。
+ * ## 機能
+ * - 複数行のテキスト入力に対応します。
+ * - ラベルと入力欄の縦横レイアウト切り替えに対応しています。
+ * - 制御コンポーネントと非制御コンポーネントの両方のモードをサポートします。
+ * - エラーメッセージ表示をサポートします。
+ *
+ * ## 依存関係
+ * - `shadcn/ui` (Textarea, Label)
+ * - `FieldErrorMessage`
+ *
+ * @example
+ * ```tsx
+ * // 非制御コンポーネントとして使用
+ * <TextareaField
+ *   id="comment"
+ *   label="コメント"
+ *   placeholder="コメントを入力してください..."
+ * />
+ *
+ * // 制御コンポーネントとして使用
+ * const [bio, setBio] = useState("");
+ * <TextareaField
+ *   id="bio"
+ *   label="自己紹介"
+ *   value={bio}
+ *   onChange={(e) => setBio(e.target.value)}
+ *   isHorizontal={true}
+ *   errorMsg={bio.length > 200 ? ["200文字以内で入力してください"] : []}
+ * />
+ * ```
  */
 export function TextareaField({
     id,

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Switch } from "@/components/shadcn/switch";
 import { Label } from "@/components/shadcn/label";
@@ -7,28 +7,58 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface SwitchFieldProps {
-    /** スイッチとラベルの関連付けに使うID */
+    /** `Switch` と `Label` を関連付けるための一意なID。 */
     id: string;
-    /** ラベルに表示するテキスト */
+    /** スイッチの横に表示されるラベルテキスト。 */
     label: string;
-    /** 初期状態（ONかどうか） */
+    /** スイッチの初期状態を定義します（非制御用）。 */
     defaultChecked?: boolean;
-    /** チェック状態 */
+    /** スイッチの状態を外部から制御する場合に指定します（制御用）。 */
     checked?: boolean;
-    /** チェック状態が変更されたときのコールバック */
+    /** スイッチの状態が変更されたときに呼び出されるコールバック関数。 */
     onCheckedChange?: (checked: boolean) => void;
-    /** ラベルに追加するCSSクラス */
+    /** `Label` コンポーネントに適用するCSSクラス。 */
     labelClassName?: string;
-    /** スイッチに追加するCSSクラス */
+    /** `Switch` コンポーネントに適用するCSSクラス。 */
     switchClassName?: string;
-    /** エラーメッセージ（複数行対応） */
+    /** フィールドの下に表示するエラーメッセージの配列。 */
     errorMsg?: string[];
 }
 
 /**
- * 汎用スイッチフィールド
+ * @component SwitchField
+ * @description オン/オフを切り替えるためのラベル付きスイッチフィールドです。
  *
- * ラベルとスイッチを横に並べたシンプルなコンポーネントです。
+ * ## 機能
+ * - ラベルとスイッチを横に並べて表示します。
+ * - 制御コンポーネントと非制御コンポーネントの両方のモードをサポートします。
+ * - エラーメッセージ表示に対応しています。
+ *
+ * ## 依存関係
+ * - `shadcn/ui` (Switch, Label)
+ * - `FieldErrorMessage`
+ *
+ * ## 状態管理
+ * - `checked` prop を渡すことで、コンポーネントは制御モードで動作します。状態は親で管理する必要があります。
+ * - `checked` prop がない場合、コンポーネントは内部の `useState` で状態を管理します（非制御モード）。
+ *
+ * ## フォーム連携
+ * - `name` 属性を持つ `input[type="hidden"]` が含まれており、フォーム送信時にスイッチの状態を送信します。
+ *
+ * @example
+ * ```tsx
+ * // 非制御コンポーネントとして使用
+ * <SwitchField id="dark-mode" label="ダークモード" defaultChecked={true} />
+ *
+ * // 制御コンポーネントとして使用
+ * const [notifications, setNotifications] = useState(false);
+ * <SwitchField
+ *   id="notifications"
+ *   label="通知を有効にする"
+ *   checked={notifications}
+ *   onCheckedChange={setNotifications}
+ * />
+ * ```
  */
 export function SwitchField({
     id,

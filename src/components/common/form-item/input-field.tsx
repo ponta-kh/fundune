@@ -4,42 +4,79 @@ import { FieldErrorMessage } from "@/components/common/form-item/field-error-mes
 import { cn } from "@/lib/utils";
 
 interface InputFieldProps {
-    /** 入力欄とラベルの関連付けに使うID */
+    /** `Label` と `Input` を関連付けるための一意なID。 */
     id: string;
-    /** ラベルに表示するテキスト */
+    /** フィールドのラベルとして表示されるテキスト。 */
     label: string;
-    /** 入力欄のタイプ（text / number / password のみ） */
+    /** `Input` コンポーネントの `type` 属性。 */
     type: "text" | "number" | "password";
 
-    /** プレースホルダーテキスト */
+    /** `Input` に表示されるプレースホルダーテキスト。 */
     placeholder?: string;
-    /** 初期値 */
+    /** `Input` の初期値を定義します（非制御用）。 */
     defaultValue?: string;
-    /** 入力値 */
+    /** `Input` の値を外部から制御する場合に指定します（制御用）。 */
     value?: string;
-    /** 読み取り専用にするかどうか（デフォルト: false） */
+    /** `true` の場合、`Input` を読み取り専用にします。 */
     isReadonly?: boolean;
 
-    /** 横並びにするかどうか（スマホは縦並び固定） */
+    /** `true` の場合、ラベルと入力欄を横並びに配置します（デスクトップ表示）。 */
     isHorizontal?: boolean;
-    /** 横並び時のラベル列数 (1〜12, デフォルト: 3) */
+    /** 横並び時のラベルが占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     labelCol?: number;
-    /** 横並び時の入力欄列数 (1〜12, デフォルト: 9) */
+    /** 横並び時の入力欄が占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     inputCol?: number;
 
-    /** ラベルに追加するCSSクラス */
+    /** `Label` コンポーネントに適用するCSSクラス。 */
     labelClassName?: string;
-    /** インプットに追加するCSSクラス */
+    /** `Input` コンポーネントに適用するCSSクラス。 */
     inputClassName?: string;
 
-    /** エラーメッセージ（複数行対応） */
+    /** フィールドの下に表示するエラーメッセージの配列。 */
     errorMsg?: string[];
 }
 
 /**
- * 汎用テキスト入力フィールド
+ * @component InputField
+ * @description ラベル、入力欄、エラーメッセージを組み合わせた汎用的なテキスト入力フィールドです。
  *
- * 縦横切り替え対応、スマホは常に縦並び。
+ * ## 機能
+ * - `text`, `number`, `password` タイプをサポートします。
+ * - ラベルと入力欄の縦横レイアウト切り替えに対応しています。
+ * - 制御コンポーネントと非制御コンポーネントの両方のモードをサポートします。
+ * - エラーメッセージ表示をサポートします。
+ *
+ * ## 依存関係
+ * - `shadcn/ui` (Input, Label)
+ * - `FieldErrorMessage`
+ *
+ * ## 状態管理
+ * - `value` prop を渡すことで、コンポーネントは制御モードで動作します。`onChange` イベントを使用して状態を親で管理する必要があります。
+ * - `value` prop を渡さない場合、`defaultValue` を初期値として使用する非制御コンポーネントとして動作します。
+ *
+ * @example
+ * ```tsx
+ * // 非制御コンポーネントとして使用
+ * <InputField
+ *   id="username"
+ *   label="ユーザー名"
+ *   type="text"
+ *   placeholder="ユーザー名を入力"
+ *   defaultValue=""
+ * />
+ *
+ * // 制御コンポーネントとして使用
+ * const [password, setPassword] = useState("");
+ * <InputField
+ *   id="password"
+ *   label="パスワード"
+ *   type="password"
+ *   value={password}
+ *   onChange={(e) => setPassword(e.target.value)}
+ *   isHorizontal={true}
+ *   errorMsg={password.length < 8 ? ["8文字以上で入力してください"] : []}
+ * />
+ * ```
  */
 export function InputField({
     id,

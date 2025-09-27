@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -11,39 +11,67 @@ import { Label } from "@/components/shadcn/label";
 import { FieldErrorMessage } from "@/components/common/form-item/field-error-message";
 
 interface DatePickerFieldProps {
-    /** 入力欄とラベルの関連付けに使うID */
+    /** `Label` と入力要素を関連付けるための一意なID。 */
     id: string;
-    /** ラベルに表示するテキスト */
+    /** フィールドのラベルとして表示されるテキスト。 */
     label: string;
 
-    /** 初期値 */
+    /** 初期状態で選択されている日付。 */
     defaultValue?: Date;
-    /** 選択可能な最小日 */
+    /** 選択可能な最も過去の日付。 */
     min?: Date;
-    /** 選択可能な最大日 */
+    /** 選択可能な最も未来の日付。 */
     max?: Date;
 
-    /** 横並びにするかどうか（スマホは縦並び固定） */
+    /** `true` の場合、ラベルと入力欄を横並びに配置します（デスクトップ表示）。 */
     isHorizontal?: boolean;
-    /** 横並び時のラベル列数 (1〜12, デフォルト: 3) */
+    /** 横並び時のラベルが占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     labelCol?: number;
-    /** 横並び時の入力欄列数 (1〜12, デフォルト: 9) */
+    /** 横並び時の入力欄が占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     inputCol?: number;
 
-    /** ラベルに追加するCSSクラス */
+    /** `Label` コンポーネントに適用するCSSクラス。 */
     labelClassName?: string;
-    /** ボタンに追加するCSSクラス */
+    /** トリガーとなる `Button` コンポーネントに適用するCSSクラス。 */
     buttonClassName?: string;
 
-    /** エラーメッセージ（複数行対応） */
+    /** フィールドの下に表示するエラーメッセージの配列。 */
     errorMsg?: string[];
 }
 
 /**
- * 汎用日付ピッカーフィールド
+ * @component DatePickerField
+ * @description カレンダーから日付を選択するためのポップアップ付き日付ピッカーフィールドです。
  *
- * shadcn/uiのCalendarとPopoverを使用。
- * 縦横切り替え対応、スマホは常に縦並び。
+ * ## 機能
+ * - ボタンクリックでカレンダーをポップアップ表示し、日付を選択できます。
+ * - 選択可能な日付の範囲を `min` と `max` propで制限できます。
+ * - ラベルと入力欄の縦横レイアウト切り替えに対応しています。
+ * - エラーメッセージ表示をサポートします。
+ *
+ * ## 依存関係
+ * - `lucide-react` (CalendarIcon)
+ * - `shadcn/ui` (Button, Calendar, Popover, Label)
+ * - `FieldErrorMessage`
+ *
+ * ## 状態管理
+ * - 選択された日付 (`date`) と `Popover` の開閉状態 (`isPopoverOpen`) を内部の `useState` で管理しています。
+ * - 現状は非制御コンポーネントとしての実装です。
+ *
+ * ## フォーム連携
+ * - `name` 属性を持つ `input[type="hidden"]` が含まれており、フォーム送信時に選択された日付をISO 8601形式の文字列で送信します。
+ *
+ * @example
+ * ```tsx
+ * <DatePickerField
+ *   id="birthdate"
+ *   label="生年月日"
+ *   defaultValue={new Date(2000, 0, 1)}
+ *   min={new Date(1900, 0, 1)}
+ *   max={new Date()}
+ *   isHorizontal={true}
+ * />
+ * ```
  */
 export function DatePickerField({
     id,

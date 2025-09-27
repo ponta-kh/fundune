@@ -9,48 +9,71 @@ import {
 } from "@/components/shadcn/card";
 
 export interface CardProps {
-    /** カードのタイトル（任意） */
+    /** カードのヘッダーに表示するタイトルです。 */
     title?: string;
-    /** 補足説明（任意） */
+    /** タイトルの下に表示する補足説明です。 */
     description?: string;
-    /** タイトル右側などに置くアクション（任意） */
+    /** ヘッダーの右側に表示するアクション要素（ボタンなど）です。 */
     action?: React.ReactNode;
-    /** フッター部分（任意） */
+    /** カードのフッターに表示する要素です。 */
     footer?: React.ReactNode;
-    /** ShadcnCard に付与する cssクラス（任意） */
+    /** カード全体のコンテナ（`ShadcnCard`）に適用するCSSクラスです。 */
     className?: string;
-    /** titleコンポーネント に付与する cssクラス（任意） */
+    /** `CardTitle`コンポーネントに適用するCSSクラスです。 */
     titleClassName?: string;
-    /** descriptionコンポーネント に付与する cssクラス（任意） */
+    /** `CardDescription`コンポーネントに適用するCSSクラスです。 */
     descriptionClassName?: string;
-    /** actionコンポーネント に付与する cssクラス（任意） */
+    /** `CardAction`コンポーネントに適用するCSSクラスです。 */
     actionClassName?: string;
-    /** contentコンポーネント に付与する cssクラス（任意） */
+    /** `CardContent`コンポーネントに適用するCSSクラスです。 */
     contentClassName?: string;
-    /** footerコンポーネント に付与する cssクラス（任意） */
+    /** `CardFooter`コンポーネントに適用するCSSクラスです。 */
     footerClassName?: string;
-    /** 本文（必須） */
+    /** カードのメインコンテンツとして表示する要素です。 */
     children: React.ReactNode;
 }
 
 /**
- * 汎用カードコンポーネント
+ * @component Card
+ * @description 情報を整理して表示するための汎用的なカードコンポーネントです。
  *
- * shadcn/ui の Card コンポーネントをベースにしたカスタムカード。
- * - タイトル、説明、アクションは任意。
- * - メインの `content` は必須。
- * - `footer` は任意で、補足情報やボタンを置く想定。
+ * ## 機能
+ * - ヘッダー、コンテンツ、フッターの各セクションを組み合わせて柔軟なレイアウトを構築できます。
+ * - ヘッダーにはタイトル、説明、アクション要素を配置可能です。
  *
- * @component
+ * ## 依存関係
+ * このコンポーネントは `shadcn/ui` の以下のコンポーネントに依存しています:
+ * - `Card` (as `ShadcnCard`)
+ * - `CardHeader`
+ * - `CardFooter`
+ * - `CardTitle`
+ * - `CardDescription`
+ * - `CardContent`
+ * - `CardAction`
+ *
+ * ## スタイリング
+ * - 各パーツ（`title`, `description`, `content`など）に個別のCSSクラスを適用できます。
+ * - `className` prop を通じてカード全体にスタイルを適用することも可能です。
+ *
  * @example
  * ```tsx
- * <Card
- *   title="カードのタイトル"
- *   description="カードの説明文"
- *   action={<Button>アクション</Button>}
- *   content={<p>ここにカードの内容が入ります。</p>}
- *   footer={<span>フッター情報</span>}
- * />
+ * import { Card } from "./Card";
+ * import { Button } from "@/components/shadcn/button";
+ *
+ * const MyCard = () => (
+ *   <Card
+ *     title="カードのタイトル"
+ *     description="これはカードの簡単な説明文です。"
+ *     action={<Button variant="outline">アクション</Button>}
+ *     footer={<p>フッター情報</p>}
+ *     className="w-[350px]"
+ *   >
+ *     <p>
+ *       ここにカードの本文が入ります。
+ *       テキストや他のコンポーネントを自由に配置できます。
+ *     </p>
+ *   </Card>
+ * );
  * ```
  */
 export function Card({

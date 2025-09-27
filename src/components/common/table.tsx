@@ -10,99 +10,94 @@ import {
 } from "@/components/shadcn/table";
 
 export interface TableHeaderColumn {
-    /** ヘッダー名 */
+    /** ヘッダーセルに表示するテキストです。 */
     label: string;
-    /** ヘッダーセルに付与する Tailwind クラス（任意） */
+    /** ヘッダーセル（`TableHead`）に適用するCSSクラスです。 */
     className?: string;
 }
 
 export interface TableColumn {
-    /** セル値（JSXを描画したい可能性を考慮） */
+    /** ボディのセルに表示するコンテンツです。文字列やJSX要素を渡せます。 */
     value: React.ReactNode;
-    /** ヘッダーセルに付与する Tailwind クラス（任意） */
+    /** ボディのセル（`TableCell`）に適用するCSSクラスです。 */
     className?: string;
 }
 
 export interface TableMainRow {
-    /** 行に表示する値の配列 */
+    /** 1行分のセルのデータ配列です。 */
     value: TableColumn[];
-    /** 行全体に付与する Tailwind クラス（任意） */
+    /** 行全体（`TableRow`）に適用するCSSクラスです。 */
     className?: string;
 }
 
 export interface TableFooterColumn {
-    /** フッターセル値 */
+    /** フッターセルに表示するテキストです。 */
     value: string;
-    /** フッターセルに付与する Tailwind クラス（任意） */
+    /** フッターセル（`TableCell`）に適用するCSSクラスです。 */
     className?: string;
-    /** フッターセルのcol-span値（任意） */
+    /** フッターセルに適用する `colSpan` の値です。 */
     colSpan?: number;
 }
 
 export interface TableProps {
-    /** テーブルキャプション（任意） */
+    /** テーブル下部に表示するキャプション（補足説明）です。 */
     caption?: string;
-    /** ヘッダー定義 */
+    /** テーブルヘッダーの定義です。`TableHeaderColumn` の配列を渡します。 */
     headerRow: TableHeaderColumn[];
-    /** 表示するデータ */
+    /** テーブルのボディに表示するデータです。`TableMainRow` の配列を渡します。 */
     data: TableMainRow[];
-    /** フッター定義 */
+    /** テーブルフッターの定義です。`TableFooterColumn` の2次元配列を渡して複数行のフッターを表現します。 */
     footerRows?: TableFooterColumn[][];
 }
 
 /**
- * 汎用テーブルコンポーネント
+ * @component Table
+ * @description データ構造を定義して動的に行と列を生成する汎用テーブルコンポーネントです。
  *
- * - Shadcn UI の Table をベースにした汎用テーブル
- * - カラム定義とデータを渡すことで動的に描画可能
+ * ## 機能
+ * - ヘッダー、ボディ、フッター、キャプションをサポートします。
+ * - データが空の場合、専用のメッセージを表示します。
+ * - フッターは複数行に対応しており、`colSpan` を使ったセルの結合が可能です。
+ *
+ * ## 依存関係
+ * このコンポーネントは `shadcn/ui` の `Table` 関連コンポーネントに依存しています。
+ *
+ * ## スタイリング
+ * - `className` を通じて、各`TableRow`, `TableHead`, `TableCell`に個別のスタイルを適用できます。
  *
  * @example
  * ```tsx
- * import { Table } from "@/components/Table";
- *
  * const header = [
- *   { label: "ID", className: "w-20 text-center" },
- *   { label: "名前" },
- *   { label: "年齢", className: "text-right" },
+ *   { label: "商品ID", className: "w-24" },
+ *   { label: "商品名" },
+ *   { label: "価格", className: "text-right" },
  * ];
  *
  * const data = [
- *   [
- *     { value: "1", className: "text-center" },
- *     { value: "田中 太郎" },
- *     { value: "28", className: "text-right" },
- *   ],
- *   [
- *     { value: "2", className: "text-center" },
- *     { value: "山田 花子" },
- *     { value: "32", className: "text-right" },
- *   ],
+ *   { value: [{ value: "#001" }, { value: "リンゴ" }, { value: "150円", className: "text-right" }] },
+ *   { value: [{ value: "#002" }, { value: "バナナ" }, { value: "100円", className: "text-right" }] },
  * ];
  *
  * const footer = [
- *   { value: "合計", colSpan: 2, className: "font-bold text-right" },
- *   { value: "60", className: "text-right font-bold" },
+ *   [
+ *     { value: "合計", colSpan: 2, className: "text-right font-bold" },
+ *     { value: "250円", className: "text-right font-bold" },
+ *   ],
  * ];
  *
- * export default function Page() {
- *   return (
- *     <Table
- *       caption="社員一覧"
- *       headerRow={header}
- *       data={data}
- *       footerRows={footer}
- *     />
- *   );
- * }
+ * <Table
+ *   caption="商品リスト"
+ *   headerRow={header}
+ *   data={data}
+ *   footerRows={footer}
+ * />
  * ```
  */
 export function Table({ caption, headerRow, data, footerRows }: TableProps) {
     return (
         <ShadcnTable>
-            {/* テーブルの補足説明（オプション） */}
             {caption && <TableCaption>{caption}</TableCaption>}
 
-            {/* ヘッダー部分 */}
             <TableHeader>
                 <TableRow>
                     {headerRow.map((col, idx) => (
@@ -113,7 +108,6 @@ export function Table({ caption, headerRow, data, footerRows }: TableProps) {
                 </TableRow>
             </TableHeader>
 
-            {/* ボディ部分 */}
             <TableBody>
                 {data.length > 0 ? (
                     data.map((row, rowIndex) => (
@@ -133,7 +127,7 @@ export function Table({ caption, headerRow, data, footerRows }: TableProps) {
                     </TableRow>
                 )}
             </TableBody>
-            {/* テーブルフッター（オプション） */}
+
             {footerRows && (
                 <TableFooter>
                     {footerRows.map((footerRow, rowIndex) => (

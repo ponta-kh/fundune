@@ -4,37 +4,68 @@ import { FieldErrorMessage } from "@/components/common/form-item/field-error-mes
 import { cn } from "@/lib/utils";
 
 interface FileInputFieldProps {
-    /** 入力欄とラベルの関連付けに使うID */
+    /** `Label` と `Input` を関連付けるための一意なID。 */
     id: string;
-    /** ラベルに表示するテキスト */
+    /** フィールドのラベルとして表示されるテキスト。 */
     label: string;
 
-    /** 横並びにするかどうか（スマホは縦並び固定） */
+    /** `true` の場合、ラベルと入力欄を横並びに配置します（デスクトップ表示）。 */
     isHorizontal?: boolean;
-    /** 横並び時のラベル列数 (1〜12, デフォルト: 3) */
+    /** 横並び時のラベルが占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     labelCol?: number;
-    /** 横並び時の入力欄列数 (1〜12, デフォルト: 9) */
+    /** 横並び時の入力欄が占めるカラム数（1-12）。`isHorizontal` が `true` の場合のみ有効。 */
     inputCol?: number;
 
-    /** ラベルに追加するCSSクラス */
+    /** `Label` コンポーネントに適用するCSSクラス。 */
     labelClassName?: string;
-    /** インプットに追加するCSSクラス */
+    /** `Input` コンポーネントに適用するCSSクラス。 */
     inputClassName?: string;
 
-    /** エラーメッセージ（複数行対応） */
+    /** フィールドの下に表示するエラーメッセージの配列。 */
     errorMsg?: string[];
-    /** 受け付けるファイルの種類 (例: "image/*, .pdf") */
+    /** `input` 要素の `accept` 属性。許可するファイルタイプを指定します（例: "image/*, .pdf"）。 */
     accept?: string;
-    /** 複数ファイルの選択を許可するかどうか */
+    /** `input` 要素の `multiple` 属性。`true` の場合、複数ファイルの選択を許可します。 */
     multiple?: boolean;
-    /** メディアキャプチャの優先設定 (カメラまたはマイク) */
+    /** `input` 要素の `capture` 属性。モバイルデバイスでカメラやマイクを直接起動する際に使用します。 */
     capture?: "user" | "environment";
 }
 
 /**
- * 汎用ファイル入力フィールド
+ * @component FileInputField
+ * @description ファイル選択のためのラベル付き入力フィールドです。
  *
- * 縦横切り替え対応、スマホは常に縦並び。
+ * ## 機能
+ * - `shadcn/ui` の `Input` を `type="file"` として使用します。
+ * - ラベルと入力欄の縦横レイアウト切り替えに対応しています。
+ * - エラーメッセージ表示をサポートします。
+ * - `accept`, `multiple`, `capture` など、標準のファイル入力属性をサポートします。
+ *
+ * ## 依存関係
+ * - `shadcn/ui` (Input, Label)
+ * - `FieldErrorMessage`
+ *
+ * ## スタイリング
+ * - `labelClassName` と `inputClassName` を通じて、ラベルと入力コンポーネントに個別のスタイルを適用できます。
+ *
+ * @example
+ * ```tsx
+ * // 単一の画像ファイルを選択
+ * <FileInputField
+ *   id="avatar"
+ *   label="アバター画像"
+ *   accept="image/png, image/jpeg"
+ *   isHorizontal={true}
+ * />
+ *
+ * // 複数のファイルを選択
+ * <FileInputField
+ *   id="documents"
+ *   label="書類"
+ *   multiple={true}
+ *   errorMsg={["ファイルを選択してください"]}
+ * />
+ * ```
  */
 export function FileInputField({
     id,
