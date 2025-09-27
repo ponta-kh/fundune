@@ -119,7 +119,7 @@ export function ComboboxField({
     const selectedLabel = items.find((item) => item.value === value)?.label;
 
     return (
-        <div className={cn("grid gap-2", isHorizontal && "md:grid-cols-12 md:items-start")}>
+        <div className={cn("grid gap-2", isHorizontal && "md:grid-cols-12 md:items-center")}>
             <Label
                 htmlFor={id}
                 className={cn(labelClassName, isHorizontal && `md:col-span-${labelCol}`)}

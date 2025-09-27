@@ -96,7 +96,7 @@ export function InputField({
     return (
         <div
             // 基本は縦並び(grid gap-2)、横並びなら md: 以上で grid-cols-12
-            className={cn("grid gap-2", isHorizontal && "md:grid-cols-12 md:items-start")}
+            className={cn("grid gap-2", isHorizontal && "md:grid-cols-12 md:items-center")}
         >
             {/* ラベル */}
             <Label

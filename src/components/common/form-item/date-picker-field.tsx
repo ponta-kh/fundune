@@ -95,7 +95,7 @@ export function DatePickerField({
     };
 
     return (
-        <div className={cn("grid gap-2", isHorizontal && "md:grid-cols-12 md:items-start")}>
+        <div className={cn("grid gap-2", isHorizontal && "md:grid-cols-12 md:items-center")}>
             {/* ラベル */}
             <Label
                 htmlFor={id}
