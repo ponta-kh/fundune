@@ -18,6 +18,35 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
         },
     },
+    build: {
+        lib: {
+            entry: {
+                index: path.resolve(__dirname, "src/index.ts"),
+                form: path.resolve(__dirname, "src/form.ts"),
+                shadcn: path.resolve(__dirname, "src/shadcn.ts"),
+            },
+            formats: ["es"],
+            fileName: (format, entryName) => `${entryName}.${format}.js`,
+        },
+        rollupOptions: {
+            external: [
+                "react",
+                "react-dom",
+                "react/jsx-runtime",
+                "@radix-ui/react-checkbox",
+                "@radix-ui/react-dialog",
+                "@radix-ui/react-label",
+                "@radix-ui/react-popover",
+                "@radix-ui/react-radio-group",
+                "@radix-ui/react-select",
+                "@radix-ui/react-slot",
+                "@radix-ui/react-switch",
+                "lucide-react",
+                "react-day-picker",
+                "date-fns",
+            ],
+        },
+    },
     test: {
         projects: [
             {
