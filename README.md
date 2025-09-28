@@ -1,73 +1,86 @@
-# React + TypeScript + Vite
+# My Component Library
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a reusable React component library built with Vite, TypeScript, and styled with Tailwind CSS. It includes a set of common components, form elements, and UI components based on shadcn/ui.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Install the package from npm:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install my-component
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**Note:** The package name `my-component` is a placeholder. Please change it to a unique name before publishing.
+
+## Usage
+
+You can import components in two ways:
+
+### 1. Sub-path Imports (Recommended)
+
+For better performance and code-splitting, import components from their specific groups. This is the recommended approach.
+
+```jsx
+import { InputField, CheckboxField } from 'my-component/form';
+import { Button, Dialog } from 'my-component/shadcn';
+
+function MyOptimizedPage() {
+  return (
+    <form>
+      <InputField label="Email" />
+      <CheckboxField label="I agree to the terms" />
+      <Button>Subscribe</Button>
+    </form>
+  );
+}
+```
+
+### 2. Main Import (for common components)
+
+You can also import components like `Card` and `Table` from the main entry point.
+
+```jsx
+import { Card, Table, Button } from 'my-component'; // Button can also be imported from here
+
+function MyPage() {
+  return (
+    <Card>
+      <p>This is a card.</p>
+      <Button>Click Me</Button>
+    </Card>
+  );
+}
+```
+
+## Styling Setup (Important!)
+
+This library uses Tailwind CSS. To ensure components are styled correctly, you **must** configure your project's `tailwind.config.js` to scan this library's files for CSS classes.
+
+Add the following path to the `content` array in your `tailwind.config.js`:
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+// tailwind.config.js
+module.exports = {
+  content: [
+    // Your project's files
+    "./src/**/*.{js,ts,jsx,tsx}",
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
+    // Add this line
+    "./node_modules/my-component/dist/**/*.js",
+  ],
+  theme: {
+    extend: {},
   },
-])
+  plugins: [],
+};
 ```
+
+Without this step, all components will appear unstyled.
+
+## Available Component Groups
+
+Components are organized into the following groups for import:
+
+- **`my-component`**: The main entry point, which exports all components. Best used for common components like `Card` and `Table`.
+- **`my-component/form`**: Includes all form-related components like `InputField`, `CheckboxField`, `SelectField`, etc.
+- **`my-component/shadcn`**: Includes UI components from the shadcn collection, such as `Button`, `Dialog`, `Calendar`, etc.
