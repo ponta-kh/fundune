@@ -41,18 +41,17 @@ export interface AlertDialogProps {
  *
  * ## 機能
  * - トリガー、タイトル、説明、アクションボタン、キャンセルボタンを簡単に設定できます。
- * - ユーザーのアクションを `onAction` コールバックで受け取ります。
  *
  * ## 依存関係
  * このコンポーネントは `shadcn/ui` の `AlertDialog` 関連コンポーネントに依存しています。
  *
  * ## 使い方
  * - `trigger` prop にダイアログを開くボタンなどの要素を渡します。
- * - `title`, `actionLabel`, `onAction` は必須です。
+ * - `title`, `actionLabel` は必須です。
  *
  * @example
  * ```tsx
- * import { AlertDialog } from "./AlertDialog";
+ * import { AlertDialog } from "./alert-dialog";
  * import { Button } from "@/components/shadcn/button";
  *
  * const MyAlertDialog = () => (

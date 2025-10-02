@@ -32,40 +32,34 @@ export interface ViewDialogProps {
 }
 
 /**
- * @component Dialog
+ * @component ViewDialog
  * @description ユーザーに追加情報やアクションを求めるための汎用的なモーダルダイアログです。
  *
  * ## 機能
- * - トリガー、ヘッダー、コンテンツ、フッターを簡単に設定できます。
- * - 制御コンポーネントと非制御コンポーネントの両方のモードをサポートします。
+ * - トリガー、ヘッダー、コンテンツを簡単に設定できます。
+ * - フッターにはデフォルトで閉じるボタンが表示されます。
  *
  * ## 依存関係
  * このコンポーネントは `shadcn/ui` の `Dialog` 関連コンポーネントに依存しています。
  *
  * ## 使い方
  * - `trigger` prop にダイアログを開くボタンなどの要素を渡します。
- * - `title` と `children` は必須です。
- * - `description` と `footer` は任意です。
+ * - `children` は必須です。
+ * - `title`, `description` は任意です。
  *
  * @example
  * ```tsx
- * import { Dialog } from "./Dialog";
+ * import { ViewDialog } from "./view-dialog";
  * import { Button } from "@/components/shadcn/button";
  *
  * const MyDialog = () => (
- *   <Dialog
- *     trigger={<Button>プロフィールを編集</Button>}
- *     title="プロフィールの編集"
- *     description="変更を保存するには、下のボタンをクリックしてください。"
- *     footer={
- *       <>
- *         <Button variant="outline">キャンセル</Button>
- *         <Button>保存</Button>
- *       </>
- *     }
+ *   <ViewDialog
+ *     trigger={<Button>プロフィールを表示</Button>}
+ *     title="プロフィール"
+ *     description="これがあなたのプロフィール情報です。"
  *   >
- *     <p>ここにフォームなどのコンテンツが入ります。</p>
- *   </Dialog>
+ *     <p>ここに名前やメールアドレスなどの詳細情報が表示されます。</p>
+ *   </ViewDialog>
  * );
  * ```
  */

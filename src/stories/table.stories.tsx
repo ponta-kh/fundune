@@ -8,6 +8,20 @@ const meta = {
     parameters: {
         layout: "centered",
     },
+    argTypes: {
+        headerRow: {
+            control: false,
+            description: "テーブルヘッダーの行を定義するオブジェクトの配列。",
+        },
+        data: {
+            control: false,
+            description: "テーブルの各行のデータを定義するオブジェクトの配列。",
+        },
+        footerRows: {
+            control: false,
+            description: "テーブルフッターの行を定義するオブジェクトの配列。",
+        },
+    },
 } satisfies Meta<typeof Table>;
 
 export default meta;

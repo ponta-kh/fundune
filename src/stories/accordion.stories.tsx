@@ -27,6 +27,12 @@ const meta = {
     args: {
         items: accordionItems,
     },
+    argTypes: {
+        items: {
+            control: false,
+            description: "アコーディオンの各アイテムを定義するオブジェクトの配列。",
+        },
+    },
 } satisfies Meta<typeof Accordion>;
 
 export default meta;

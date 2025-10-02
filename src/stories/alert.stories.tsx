@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Alert } from "@/components/common/alert";
 import { Terminal } from "lucide-react";
-import * as React from "react";
 
 const meta = {
     title: "common/Alert",
@@ -10,6 +9,16 @@ const meta = {
     args: {
         title: "Heads up!",
         children: "You can add components to your app using the cli.",
+    },
+    argTypes: {
+        children: {
+            control: false,
+            description: "アラートの本文に表示されるReact要素。",
+        },
+        icon: {
+            control: false,
+            description: "タイトル前に表示されるアイコン要素。",
+        },
     },
 } satisfies Meta<typeof Alert>;
 
