@@ -24,14 +24,15 @@ export interface AlertDialogProps {
     cancelLabel?: string;
     /** 続行ボタンのテキスト。 */
     actionLabel: string;
-    /** 続行ボタンがクリックされたときに呼び出されるコールバック関数。 */
-    onAction: () => void;
     /** `AlertDialogContent` コンポーネントに適用するCSSクラス。 */
-    className?: string;
-    /** ダイアログの開閉状態を外部から制御する場合に指定します（制御用）。 */
-    open?: boolean;
-    /** ダイアログの開閉状態が変更されたときに呼び出されるコールバック関数。 */
-    onOpenChange?: (open: boolean) => void;
+    contentClassName?: string;
+    headerClassName?: string;
+    titleClassName?: string;
+    descriptionClassName?: string;
+    footerClassName?: string;
+    cancelButtonClassName?: string;
+    actionButtonClassName?: string;
+    formId?: string;
 }
 
 /**
@@ -61,7 +62,6 @@ export interface AlertDialogProps {
  *     description="この操作は元に戻せません。アカウントと関連データがすべて削除されます。"
  *     cancelLabel="キャンセル"
  *     actionLabel="削除"
- *     onAction={() => console.log("アカウント削除")}
  *   />
  * );
  * ```
@@ -72,22 +72,36 @@ export function AlertDialog({
     description,
     cancelLabel = "Cancel",
     actionLabel,
-    onAction,
-    className,
-    open,
-    onOpenChange,
+    contentClassName,
+    headerClassName,
+    titleClassName,
+    descriptionClassName,
+    footerClassName,
+    cancelButtonClassName,
+    actionButtonClassName,
+    formId,
 }: AlertDialogProps) {
     return (
-        <ShadcnAlertDialog open={open} onOpenChange={onOpenChange}>
-            {trigger && <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>}
-            <AlertDialogContent className={className}>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>{title}</AlertDialogTitle>
-                    {description && <AlertDialogDescription>{description}</AlertDialogDescription>}
+        <ShadcnAlertDialog>
+            <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
+            <AlertDialogContent className={contentClassName}>
+                <AlertDialogHeader className={headerClassName}>
+                    {title && (
+                        <AlertDialogTitle className={titleClassName}>{title}</AlertDialogTitle>
+                    )}
+                    {description && (
+                        <AlertDialogDescription className={descriptionClassName}>
+                            {description}
+                        </AlertDialogDescription>
+                    )}
                 </AlertDialogHeader>
-                <AlertDialogFooter>
-                    <AlertDialogCancel>{cancelLabel}</AlertDialogCancel>
-                    <AlertDialogAction onClick={onAction}>{actionLabel}</AlertDialogAction>
+                <AlertDialogFooter className={footerClassName}>
+                    <AlertDialogCancel className={cancelButtonClassName}>
+                        {cancelLabel}
+                    </AlertDialogCancel>
+                    <AlertDialogAction className={actionButtonClassName} form={formId}>
+                        {actionLabel}
+                    </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </ShadcnAlertDialog>

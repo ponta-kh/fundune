@@ -9,25 +9,26 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
+    DialogClose,
 } from "@/components/shadcn/dialog";
+import { Button } from "@/components/shadcn/button";
 
-export interface DialogProps {
+export interface ViewDialogProps {
     /** ダイアログを開くためのトリガー要素。 */
     trigger: React.ReactNode;
     /** ダイアログのヘッダーに表示するタイトル。 */
-    title: string;
+    title?: string;
     /** タイトルの下に表示する補足説明（任意）。 */
     description?: string;
     /** ダイアログのメインコンテンツとして表示する要素。 */
     children: React.ReactNode;
-    /** ダイアログのフッターに表示する要素（ボタンなど）。 */
-    footer?: React.ReactNode;
     /** `DialogContent` コンポーネントに適用するCSSクラス。 */
-    className?: string;
-    /** ダイアログの開閉状態を外部から制御する場合に指定します（制御用）。 */
-    open?: boolean;
-    /** ダイアログの開閉状態が変更されたときに呼び出されるコールバック関数。 */
-    onOpenChange?: (open: boolean) => void;
+    contentClassName?: string;
+    headerClassName?: string;
+    titleClassName?: string;
+    descriptionClassName?: string;
+    footerClassName?: string;
+    closeButtonText?: string;
 }
 
 /**
@@ -68,28 +69,36 @@ export interface DialogProps {
  * );
  * ```
  */
-export function Dialog({
+export function ViewDialog({
     trigger,
     title,
     description,
     children,
-    footer,
-    className,
-    open,
-    onOpenChange,
-}: DialogProps) {
+    closeButtonText = "Close",
+    contentClassName,
+    headerClassName,
+    titleClassName,
+    descriptionClassName,
+    footerClassName,
+}: ViewDialogProps) {
     return (
-        <ShadcnDialog open={open} onOpenChange={onOpenChange}>
-            {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-            <DialogContent className={className}>
-                <DialogHeader>
-                    <DialogTitle>{title}</DialogTitle>
-                    {description && <DialogDescription>{description}</DialogDescription>}
+        <ShadcnDialog>
+            <DialogTrigger asChild>{trigger}</DialogTrigger>
+            <DialogContent className={contentClassName}>
+                <DialogHeader className={headerClassName}>
+                    {title && <DialogTitle className={titleClassName}>{title}</DialogTitle>}
+                    {description && (
+                        <DialogDescription className={descriptionClassName}>
+                            {description}
+                        </DialogDescription>
+                    )}
                 </DialogHeader>
-
                 {children}
-
-                {footer && <DialogFooter>{footer}</DialogFooter>}
+                <DialogFooter className={footerClassName}>
+                    <DialogClose asChild>
+                        <Button variant="outline">{closeButtonText}</Button>
+                    </DialogClose>
+                </DialogFooter>
             </DialogContent>
         </ShadcnDialog>
     );
