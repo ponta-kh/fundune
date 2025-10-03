@@ -41,31 +41,22 @@ interface TextareaFieldProps {
  * ## 機能
  * - 複数行のテキスト入力に対応します。
  * - ラベルと入力欄の縦横レイアウト切り替えに対応しています。
- * - 制御コンポーネントと非制御コンポーネントの両方のモードをサポートします。
  * - エラーメッセージ表示をサポートします。
  *
  * ## 依存関係
  * - `shadcn/ui` (Textarea, Label)
  * - `FieldErrorMessage`
  *
+ * ## 状態管理
+ * - このコンポーネントは `defaultValue` を受け付けますが、内部で状態を完全に管理するわけではありません。
+ * - `react-hook-form` のようなフォームライブラリと組み合わせて使用することを想定しています。
+ *
  * @example
  * ```tsx
- * // 非制御コンポーネントとして使用
  * <TextareaField
  *   id="comment"
  *   label="コメント"
  *   placeholder="コメントを入力してください..."
- * />
- *
- * // 制御コンポーネントとして使用
- * const [bio, setBio] = useState("");
- * <TextareaField
- *   id="bio"
- *   label="自己紹介"
- *   value={bio}
- *   onChange={(e) => setBio(e.target.value)}
- *   isHorizontal={true}
- *   errorMsg={bio.length > 200 ? ["200文字以内で入力してください"] : []}
  * />
  * ```
  */

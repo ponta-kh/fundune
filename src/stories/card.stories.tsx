@@ -9,7 +9,20 @@ const meta = {
     parameters: {
         layout: "centered",
     },
-    argTypes: {},
+    argTypes: {
+        children: {
+            control: false,
+            description: "カードの本文に表示されるReact要素。",
+        },
+        footer: {
+            control: false,
+            description: "カードのフッターに表示されるReact要素。",
+        },
+        action: {
+            control: false,
+            description: "カードヘッダーの右側に表示されるアクション要素（ボタンなど）。",
+        },
+    },
 } satisfies Meta<typeof Card>;
 
 export default meta;

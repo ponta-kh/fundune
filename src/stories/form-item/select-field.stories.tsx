@@ -47,15 +47,6 @@ export const Horizontal: Story = {
     },
 };
 
-export const WithUnselectedOption: Story = {
-    args: {
-        id: "fruit-select",
-        label: "Favorite Fruit",
-        items: items,
-        unselectedOptionLabel: "None",
-    },
-};
-
 export const WithError: Story = {
     args: {
         id: "fruit-select",
