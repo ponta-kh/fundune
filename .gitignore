@@ -25,3 +25,8 @@ dist-ssr
 
 *storybook.log
 storybook-static
+
+# Gemini CLI
+.gemini/*
+!.gemini/settings.json
+

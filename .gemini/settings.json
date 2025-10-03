@@ -1,5 +1,8 @@
 {
   "contextFileName": "gemini.md",
+  "checkpointing": {
+    "enabled": true
+  },
   "mcpServers": {
     "shadcn": {
       "url": "https://shadcn.io/mcp.json",
