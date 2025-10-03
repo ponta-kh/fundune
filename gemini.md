@@ -1,44 +1,44 @@
-# Project Development Guidelines
+# プロジェクト開発ガイドライン
 
-This document outlines the rules and conventions to be followed during the development of this component library.
+このドキュメントは、このコンポーネントライブラリの開発中に従うべきルールと規約を概説します。
 
-## 1. 構成 (Structure & Configuration)
+## 1. 構成
 
-This section describes the main tools, libraries, and directory structure of the project.
+このセクションでは、プロジェクトの主要なツール、ライブラリ、およびディレクトリ構造について説明します。
 
-### 1.1. Core Technologies & Tools
+### 1.1. 主要技術とツール
 
-- **Package Manager**: npm
-- **Language**: TypeScript
-- **UI Framework**: React
-- **Build Tool**: Vite
-- **Component-driven Development**: Storybook
-- **Unit Testing**: Vitest (planned)
-- **Linting**: ESLint
-- **Code Formatting**: Prettier
-- **Base Component Library**: shadcn/ui
+- **パッケージマネージャー**: npm
+- **言語**: TypeScript
+- **UIフレームワーク**: React
+- **ビルドツール**: Vite
+- **コンポーネント駆動開発**: Storybook
+- **ユニットテスト**: Vitest (導入予定)
+- **リンター**: ESLint
+- **コードフォーマッター**: Prettier
+- **ベースコンポーネントライブラリ**: shadcn/ui
 
-### 1.2. Directory Structure
+### 1.2. ディレクトリ構成
 
-- `src/components/common`: Contains the publicly exposed wrapper components that form the final component library.
-- `src/components/shadcn`: Contains the base UI components from shadcn/ui. These should not be used directly outside of the `common` components.
-- `src/stories`: Contains the Storybook stories for the components in `src/components/common`. The directory structure here mirrors the `common` directory.
-- `src/lib`: Contains shared utilities, such as the `cn` function for merging class names.
+- `src/components/common`: 最終的なコンポーネントライブラリとして公開されるラッパーコンポーネントを格納します。
+- `src/components/shadcn`: shadcn/uiから提供されるベースUIコンポーネントを格納します。これらのコンポーネントは`common`コンポーネント以外から直接使用してはいけません。
+- `src/stories`: `src/components/common`内のコンポーネントに対応するStorybookのストーリーを格納します。ここのディレクトリ構造は`common`ディレクトリをミラーリングします。
+- `src/lib`: `cn`関数のような共有ユーティリティを格納します。
 
-## 2. 実装 (Implementation)
+## 2. 実装
 
-### 2.1. Component Architecture
+### 2.1. コンポーネントアーキテクチャ
 
-The component architecture is based on wrapping `shadcn/ui` components to create a custom, reusable library.
+コンポーネントのアーキテクチャは、`shadcn/ui`コンポーネントをラップして、カスタムで再利用可能なライブラリを作成することを基本とします。
 
-- **Base Components**: The raw, unstyled components provided by `shadcn/ui` are located in `src/components/shadcn/`. These components **must not** be exported directly from the library or used directly in application code.
-- **Wrapper Components**: The publicly exposed components of this library are located in `src/components/common/`.
-- **Implementation Steps**:
-    1. Each component in `src/components/common/` will act as a wrapper around a corresponding component from `src/components/shadcn/`.
-    2. The wrapper's responsibility is to apply consistent styling, add application-specific logic, and define a clear, simplified API for the consumer.
-    3. Customizations and styling should be applied via `className` and the `cn` utility from `src/lib/utils.ts`.
+- **ベースコンポーネント**: `shadcn/ui`によって提供される素のコンポーネントは`src/components/shadcn/`に配置されます。これらのコンポーネントは、ライブラリから直接エクスポートしたり、アプリケーションコードで直接使用したりしては**いけません**。
+- **ラッパーコンポーネント**: このライブラリの公開コンポーネントは`src/components/common/`に配置されます。
+- **実装手順**:
+    1. `src/components/common/`の各コンポーネントは、`src/components/shadcn/`の対応するコンポーネントのラッパーとして機能します。
+    2. ラッパーの責務は、一貫したスタイリングの適用、アプリケーション固有のロジックの追加、そして利用者にとって明確でシンプルなAPIを定義することです。
+    3. カスタマイズとスタイリングは`className`と`src/lib/utils.ts`の`cn`ユーティリティを介して適用する必要があります。
 
-#### Example: `src/components/common/card.tsx`
+#### 参考例: `src/components/common/card.tsx`
 
 ```typescript
 import * as React from 'react';
@@ -52,7 +52,7 @@ import {
   CardTitle,
 } from '@/components/shadcn/card';
 
-// Define props for the wrapper component
+// ラッパーコンポーネントのPropsを定義
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   description?: string;
@@ -82,35 +82,35 @@ const Card: React.FC<React.PropsWithChildren<CardProps>> = ({
 export { Card };
 ```
 
-### 2.2. React Component Implementation
+### 2.2. Reactコンポーネント実装
 
-Adhere to the latest React implementation standards, primarily using functional components and Hooks.
+最新のReact実装標準に準拠し、主に関数コンポーネントとHooksを使用します。
 
-- **Component Definition**: All components must be defined as functional components. Class components are not to be used.
-- **Props Typing**: Use TypeScript interfaces for defining component props.
-- **State Management**:
-    - For simple, local state, use the `useState` Hook.
-    - For more complex state logic, use the `useReducer` Hook.
-    - To avoid prop drilling, use the `Context API`.
-- **Side Effects**: Use the `useEffect` Hook for any side effects, such as data fetching or subscriptions.
-- **Memoization**: To optimize performance, use `useCallback` for functions and `useMemo` for values.
+- **コンポーネント定義**: すべてのコンポーネントは関数コンポーネントとして定義する必要があります。クラスコンポーネントは使用しません。
+- **Propsの型付け**: コンポーネントのPropsを定義するには、TypeScriptのインターフェースを使用します。
+- **状態管理**:
+    - シンプルなローカルステートには`useState`フックを使用します。
+    - より複雑な状態ロジックには`useReducer`フックを使用します。
+    - Prop Drillingを避けるためには`Context API`を使用します。
+- **副作用**: データ取得や購読などの副作用には`useEffect`フックを使用します。
+- **メモ化**: パフォーマンスを最適化するために、関数には`useCallback`を、値には`useMemo`を使用します。
 
-## 3. テスト (Testing)
+## 3. テスト
 
 ### 3.1. Storybook
 
-Stories must be written in [Component Story Format 3 (CSF 3)](https://storybook.js.org/docs/react/writing-stories/introduction) to align with modern Storybook practices.
+ストーリーは、モダンなStorybookのプラクティスに合わせて[Component Story Format 3 (CSF 3)](https://storybook.js.org/docs/react/writing-stories/introduction)で記述する必要があります。
 
-- **Directory Structure**: The directory structure for stories within `src/stories/` must mirror the component structure in `src/components/common/`. For example, the story for `src/components/common/form-item/input-field.tsx` must be located at `src/stories/form-item/input-field.stories.tsx`.
-- **`meta` Object (Default Export)**: Each story file must have a default export containing the component's metadata.
-    - `title`: Path-based naming convention that reflects the directory structure (e.g., `Common/Form/InputField`).
-    - `component`: The component itself.
-    - `tags: ['autodocs']`: Enable automatic documentation generation.
-    - `argTypes`: Define controls for props to manipulate the component in the Storybook UI.
-- **Story Objects (Named Exports)**: Each individual story should be a named export.
-    - Use the `StoryObj<typeof meta>` type for type safety.
-    - Define the component's state for a given story using the `args` property.
+- **ディレクトリ構造**: `src/stories/`内のストーリーのディレクトリ構造は、`src/components/common/`のコンポーネント構造をミラーリングする必要があります。例えば、`src/components/common/form-item/input-field.tsx`のストーリーは`src/stories/form-item/input-field.stories.tsx`に配置する必要があります。
+- **`meta`オブジェクト (デフォルトエクスポート)**: 各ストーリーファイルには、コンポーネントのメタデータを含むデフォルトエクスポートが必要です。
+    - `title`: ディレクトリ構造を反映したパスベースの命名規則（例: `Common/Form/InputField`）。
+    - `component`: コンポーネント自体。
+    - `tags: ['autodocs']`: 自動ドキュメント生成を有効にします。
+    - `argTypes`: Storybook UIでコンポーネントを操作するためのコントロールを定義します。
+- **ストーリーオブジェクト (名前付きエクスポート)**: 個々のストーリーは名前付きエクスポートでなければなりません。
+    - 型安全のために`StoryObj<typeof meta>`型を使用します。
+    - `args`プロパティを使用して、特定のストーリーのコンポーネントの状態を定義します。
 
-### 3.2. Unit Testing (Vitest)
+### 3.2. ユニットテスト (Vitest)
 
-*(Rules for unit testing with Vitest will be defined here.)*
+*（Vitestによるユニットテストのルールはここに定義されます。）*
