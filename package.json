@@ -1,6 +1,6 @@
 {
     "name": "my-component",
-    "private": true,
+    "private": false,
     "version": "0.1.0",
     "type": "module",
     "main": "./dist/index.es.js",
@@ -17,6 +17,10 @@
         "./form": {
             "import": "./dist/form.es.js",
             "types": "./dist/form.d.ts"
+        },
+        "./dialog": {
+            "import": "./dist/dialog.es.js",
+            "types": "./dist/dialog.d.ts"
         },
         "./shadcn": {
             "import": "./dist/shadcn.es.js",

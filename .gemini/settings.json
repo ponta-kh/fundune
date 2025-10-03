@@ -1,7 +1,11 @@
 {
-  "contextFileName": "gemini.md",
-  "checkpointing": {
-    "enabled": true
+  "general": {
+    "checkpointing": {
+      "enabled": true
+    }
+  },
+  "context": {
+    "fileName": "gemini.md"
   },
   "mcpServers": {
     "shadcn": {

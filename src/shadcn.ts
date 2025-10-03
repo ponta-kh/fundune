@@ -1,4 +1,7 @@
 /* shadcn uiのコンポーネント */
+export * from "./components/shadcn/accordion";
+export * from "./components/shadcn/alert";
+export * from "./components/shadcn/alert-dialog";
 export * from "./components/shadcn/button";
 export * from "./components/shadcn/calendar";
 export * from "./components/shadcn/card";
@@ -13,3 +16,4 @@ export * from "./components/shadcn/select";
 export * from "./components/shadcn/switch";
 export * from "./components/shadcn/table";
 export * from "./components/shadcn/textarea";
+export * from "./components/shadcn/tooltip";
