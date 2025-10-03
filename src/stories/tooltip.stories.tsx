@@ -3,7 +3,7 @@ import { Button } from "@/components/shadcn/button";
 import { Tooltip } from "@/components/common/tooltip";
 
 const meta = {
-    title: "components/common/Tooltip",
+    title: "Tooltip",
     component: Tooltip,
     parameters: {
         layout: "centered",

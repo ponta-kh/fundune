@@ -3,7 +3,7 @@ import { Alert } from "@/components/common/alert";
 import { Terminal } from "lucide-react";
 
 const meta = {
-    title: "common/Alert",
+    title: "Alert",
     component: Alert,
     tags: ["autodocs"],
     args: {

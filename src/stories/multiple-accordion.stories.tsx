@@ -20,7 +20,7 @@ const accordionItems = [
 ];
 
 const meta = {
-    title: "common/MultipleAccordion",
+    title: "MultipleAccordion",
     component: MultipleAccordion,
     tags: ["autodocs"],
     args: {
