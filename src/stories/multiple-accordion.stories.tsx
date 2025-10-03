@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Accordion } from "@/components/common/accordion";
+import { MultipleAccordion } from "@/components/common/multiple-accordion";
 
 const accordionItems = [
     {
@@ -20,8 +20,8 @@ const accordionItems = [
 ];
 
 const meta = {
-    title: "common/Accordion",
-    component: Accordion,
+    title: "common/MultipleAccordion",
+    component: MultipleAccordion,
     tags: ["autodocs"],
     args: {
         items: accordionItems,
@@ -31,31 +31,27 @@ const meta = {
             control: false,
             description: "アコーディオンの各アイテムを定義するオブジェクトの配列。",
         },
+        defaultValue: {
+            description: "初期状態で開いておく項目の value の配列。",
+        },
     },
-} satisfies Meta<typeof Accordion>;
+} satisfies Meta<typeof MultipleAccordion>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-    args: {
-        type: "single",
-        collapsible: true,
-        defaultValue: "item-1",
-    },
+    args: {},
 };
 
-export const Multiple: Story = {
+export const WithDefaultValue: Story = {
     args: {
-        type: "multiple",
         defaultValue: ["item-1", "item-2"],
     },
 };
 
 export const CustomStyled: Story = {
     args: {
-        type: "single",
-        collapsible: true,
         items: [
             {
                 ...accordionItems[0],
@@ -65,5 +61,6 @@ export const CustomStyled: Story = {
             },
             ...accordionItems.slice(1),
         ],
+        defaultValue: ["item-1"],
     },
 };

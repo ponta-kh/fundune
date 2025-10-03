@@ -24,7 +24,7 @@ export const Default: Story = {
     args: {
         label: "Favorite Fruit",
         name: "fruit",
-        radidItems: items,
+        radioItems: items,
     },
 };
 
@@ -32,7 +32,7 @@ export const WithDefaultValue: Story = {
     args: {
         label: "Favorite Fruit",
         name: "fruit",
-        radidItems: items,
+        radioItems: items,
         defaultValue: "banana",
     },
 };
