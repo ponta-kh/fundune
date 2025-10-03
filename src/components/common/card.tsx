@@ -27,7 +27,7 @@ export interface CardProps {
     actionClassName?: string;
     /** `CardContent`コンポーネントに適用するCSSクラスです。 */
     contentClassName?: string;
-    /** `CardFooter`コンポーネントに適用するCSSクラスです。 */
+    /** `CardFooter`コンポーネントに適用するCSSクラスです。デフォルトは "flex-col gap-2" です。 */
     footerClassName?: string;
     /** カードのメインコンテンツとして表示する要素です。 */
     children: React.ReactNode;

@@ -1,6 +1,3 @@
-"use client";
-
-import * as React from "react";
 import {
     AlertDialog as ShadcnAlertDialog,
     AlertDialogAction,
@@ -26,12 +23,19 @@ export interface AlertDialogProps {
     actionLabel: string;
     /** `AlertDialogContent` コンポーネントに適用するCSSクラス。 */
     contentClassName?: string;
+    /** `AlertDialogHeader` コンポーネントに適用するCSSクラス。 */
     headerClassName?: string;
+    /** `AlertDialogTitle` コンポーネントに適用するCSSクラス。 */
     titleClassName?: string;
+    /** `AlertDialogDescription` コンポーネントに適用するCSSクラス。 */
     descriptionClassName?: string;
+    /** `AlertDialogFooter` コンポーネントに適用するCSSクラス。 */
     footerClassName?: string;
+    /** キャンセルボタンに適用するCSSクラス。 */
     cancelButtonClassName?: string;
+    /** 続行ボタンに適用するCSSクラス。 */
     actionButtonClassName?: string;
+    /** アクションボタンをフォームと関連付けるためのフォームID。 */
     formId?: string;
 }
 

@@ -21,19 +21,19 @@ interface AccordionItemProps {
     contentClassName?: string;
 }
 
-export type MultipleAccordionProps = {
+export interface MultipleAccordionProps {
     items: AccordionItemProps[];
     defaultValue?: string[];
     className?: string;
-};
+}
 
 /**
- * @component Accordion
- * @description クリックでコンテンツを開閉できるアコーディオンコンポーネントです。
+ * @component MultipleAccordion
+ * @description 複数の項目を同時に開閉できるアコーディオンコンポーネントです。
  *
  * ## 機能
  * - `items` prop に配列を渡すだけで、複数のアコーディオン項目を簡単に生成できます。
- * - `type` prop で、一度に単一の項目のみ開くか、複数の項目を開くかを制御できます。
+ * - `defaultValue` prop で、初期状態で開いておく項目を指定できます。
  *
  * ## 依存関係
  * このコンポーネントは `shadcn/ui` の `Accordion` 関連コンポーネントに依存しています。
@@ -54,13 +54,17 @@ export type MultipleAccordionProps = {
  *     title: "これは項目2ですか？",
  *     content: "はい、これは項目2のコンテンツです。",
  *   },
+ *   {
+ *     value: "item-3",
+ *     title: "これは項目3ですか？",
+ *     content: "はい、これは項目3のコンテンツです。",
+ *   },
  * ];
  *
- * <Accordion
+ * // "item-1" と "item-2" を初期状態で開く
+ * <MultipleAccordion
  *   items={accordionItems}
- *   type="single"
- *   collapsible
- *   defaultValue="item-1"
+ *   defaultValue={["item-1", "item-2"]}
  * />
  * ```
  */
