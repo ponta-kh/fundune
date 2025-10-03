@@ -12,7 +12,8 @@ const meta = {
     argTypes: {
         trigger: {
             control: false,
-            description: "ダイアログを開くためのトリガーとなるReact要素。ストーリーごとにargsで定義されます。",
+            description:
+                "ダイアログを開くためのトリガーとなるReact要素。ストーリーごとにargsで定義されます。",
         },
     },
 } satisfies Meta<typeof AlertDialog>;

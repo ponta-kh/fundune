@@ -10,8 +10,7 @@ const accordionItems = [
     {
         value: "item-2",
         title: "Is it styled?",
-        content:
-            "Yes. It comes with default styles that matches the other components' aesthetic.",
+        content: "Yes. It comes with default styles that matches the other components' aesthetic.",
     },
     {
         value: "item-3",
