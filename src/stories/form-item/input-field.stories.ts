@@ -74,4 +74,3 @@ export const Password: Story = {
         placeholder: "パスワードを入力してください",
     },
 };
-
