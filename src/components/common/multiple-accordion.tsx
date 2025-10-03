@@ -21,26 +21,11 @@ interface AccordionItemProps {
     contentClassName?: string;
 }
 
-export interface AccordionProps {
-    /** 表示するアコーディオンの項目の配列。 */
+export type MultipleAccordionProps = {
     items: AccordionItemProps[];
-    /**
-     * アコーディオンのタイプを決定します。
-     * - `single`: 一度に1つの項目のみ開けます。
-     * - `multiple`: 複数の項目を同時に開けます。
-     * @default "single"
-     */
-    type?: "single" | "multiple";
-    /**
-     * `type="single"` の場合に、開いている項目を閉じることができるかどうか。
-     * @default false
-     */
-    collapsible?: boolean;
-    /** 初期状態で開いておく項目の `value`。`type="single"`なら文字列、`type="multiple"`なら文字列配列。 */
-    defaultValue?: string | string[];
-    /** `Accordion`ルート要素に適用するCSSクラスです。 */
+    defaultValue?: string[];
     className?: string;
-}
+};
 
 /**
  * @component Accordion
@@ -79,26 +64,11 @@ export interface AccordionProps {
  * />
  * ```
  */
-export function Accordion({
-    items,
-    type = "single",
-    collapsible = false,
-    defaultValue,
-    className,
-}: AccordionProps) {
+export function MultipleAccordion({ items, defaultValue, className }: MultipleAccordionProps) {
     return (
-        <ShadcnAccordion
-            type={type}
-            collapsible={collapsible}
-            defaultValue={defaultValue}
-            className={className}
-        >
+        <ShadcnAccordion type="multiple" defaultValue={defaultValue} className={className}>
             {items.map((item) => (
-                <AccordionItem
-                    key={item.value}
-                    value={item.value}
-                    className={item.itemClassName}
-                >
+                <AccordionItem key={item.value} value={item.value} className={item.itemClassName}>
                     <AccordionTrigger className={item.triggerClassName}>
                         {item.title}
                     </AccordionTrigger>

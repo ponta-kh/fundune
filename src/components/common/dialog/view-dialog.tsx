@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import {
     Dialog as ShadcnDialog,
@@ -24,10 +22,19 @@ export interface ViewDialogProps {
     children: React.ReactNode;
     /** `DialogContent` コンポーネントに適用するCSSクラス。 */
     contentClassName?: string;
+    /** `DialogHeader` コンポーネントに適用するCSSクラス。 */
     headerClassName?: string;
+    /** `DialogTitle` コンポーネントに適用するCSSクラス。 */
     titleClassName?: string;
+    /** `DialogDescription` コンポーネントに適用するCSSクラス。 */
     descriptionClassName?: string;
+    /** `DialogFooter` コンポーネントに適用するCSSクラス。 */
     footerClassName?: string;
+    /** 閉じるボタンに適用するCSSクラス。 */
+    closeButtonClassName?: string;
+    /** 閉じるボタンのバリアント。デフォルトは "secondary"。 */
+    closeButtonVariant?: "primary" | "secondary" | "destructive" | "outline" | "ghost";
+    /** 閉じるボタンのテキスト。デフォルトは "Close"。 */
     closeButtonText?: string;
 }
 
@@ -68,29 +75,35 @@ export function ViewDialog({
     title,
     description,
     children,
-    closeButtonText = "Close",
     contentClassName,
     headerClassName,
     titleClassName,
     descriptionClassName,
     footerClassName,
+    closeButtonClassName,
+    closeButtonVariant = "secondary",
+    closeButtonText = "Close",
 }: ViewDialogProps) {
     return (
         <ShadcnDialog>
             <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent className={contentClassName}>
-                <DialogHeader className={headerClassName}>
-                    {title && <DialogTitle className={titleClassName}>{title}</DialogTitle>}
-                    {description && (
-                        <DialogDescription className={descriptionClassName}>
-                            {description}
-                        </DialogDescription>
-                    )}
-                </DialogHeader>
+                {(title || description) && (
+                    <DialogHeader className={headerClassName}>
+                        {title && <DialogTitle className={titleClassName}>{title}</DialogTitle>}
+                        {description && (
+                            <DialogDescription className={descriptionClassName}>
+                                {description}
+                            </DialogDescription>
+                        )}
+                    </DialogHeader>
+                )}
                 {children}
                 <DialogFooter className={footerClassName}>
                     <DialogClose asChild>
-                        <Button variant="outline">{closeButtonText}</Button>
+                        <Button variant={closeButtonVariant} className={closeButtonClassName}>
+                            {closeButtonText}
+                        </Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>

@@ -1,9 +1,5 @@
 import * as React from "react";
-import {
-    Alert as ShadcnAlert,
-    AlertDescription,
-    AlertTitle,
-} from "@/components/shadcn/alert";
+import { Alert as ShadcnAlert, AlertDescription, AlertTitle } from "@/components/shadcn/alert";
 
 export interface AlertProps {
     /** アラートのタイトルです。 */
@@ -66,9 +62,7 @@ export function Alert({
         <ShadcnAlert variant={variant} className={className}>
             {icon}
             {title && <AlertTitle className={titleClassName}>{title}</AlertTitle>}
-            <AlertDescription className={descriptionClassName}>
-                {children}
-            </AlertDescription>
+            <AlertDescription className={descriptionClassName}>{children}</AlertDescription>
         </ShadcnAlert>
     );
 }
