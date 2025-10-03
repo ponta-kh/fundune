@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Switch } from "@/components/shadcn/switch";
 import { Label } from "@/components/shadcn/label";

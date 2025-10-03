@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Checkbox } from "@/components/shadcn/checkbox";
 import { Label } from "@/components/shadcn/label";
