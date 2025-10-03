@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Alert as ShadcnAlert, AlertDescription, AlertTitle } from "@/components/shadcn/alert";
 
 export interface AlertProps {

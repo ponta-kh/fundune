@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -113,8 +113,8 @@ export function ComboboxField({
     buttonClassName,
     errorMsg,
 }: ComboboxFieldProps) {
-    const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState(defaultValue ?? "");
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(defaultValue ?? "");
 
     const selectedLabel = items.find((item) => item.value === value)?.label;
 
