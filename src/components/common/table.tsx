@@ -133,7 +133,11 @@ export function Table({ caption, headerRow, data, footerRows }: TableProps) {
                     {footerRows.map((footerRow, rowIndex) => (
                         <TableRow key={rowIndex}>
                             {footerRow?.map((col, idx) => (
-                                <TableCell key={idx} className={col.className} colSpan={col.colSpan}>
+                                <TableCell
+                                    key={idx}
+                                    className={col.className}
+                                    colSpan={col.colSpan}
+                                >
                                     {col.value}
                                 </TableCell>
                             ))}
