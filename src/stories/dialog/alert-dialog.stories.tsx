@@ -3,7 +3,7 @@ import { AlertDialog } from "@/components/common/dialog/alert-dialog";
 import { Button } from "@/components/shadcn/button";
 
 const meta = {
-    title: "Common/Dialog/AlertDialog",
+    title: "Dialog/AlertDialog",
     component: AlertDialog,
     tags: ["autodocs"],
     parameters: {

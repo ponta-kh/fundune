@@ -3,7 +3,7 @@ import { ViewDialog } from "@/components/common/dialog/view-dialog";
 import { Button } from "@/components/shadcn/button";
 
 const meta = {
-    title: "Common/Dialog/ViewDialog",
+    title: "Dialog/ViewDialog",
     component: ViewDialog,
     tags: ["autodocs"],
     parameters: {
