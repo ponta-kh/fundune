@@ -43,7 +43,6 @@ interface InputFieldProps {
  * ## 機能
  * - `text`, `number`, `password` タイプをサポートします。
  * - ラベルと入力欄の縦横レイアウト切り替えに対応しています。
- * - 制御コンポーネントと非制御コンポーネントの両方のモードをサポートします。
  * - エラーメッセージ表示をサポートします。
  *
  * ## 依存関係
@@ -51,30 +50,17 @@ interface InputFieldProps {
  * - `FieldErrorMessage`
  *
  * ## 状態管理
- * - `value` prop を渡すことで、コンポーネントは制御モードで動作します。`onChange` イベントを使用して状態を親で管理する必要があります。
- * - `value` prop を渡さない場合、`defaultValue` を初期値として使用する非制御コンポーネントとして動作します。
+ * - このコンポーネントは `defaultValue` を受け付けますが、内部で状態を完全に管理するわけではありません。
+ * - `react-hook-form` のようなフォームライブラリと組み合わせて使用することを想定しています。
  *
  * @example
  * ```tsx
- * // 非制御コンポーネントとして使用
  * <InputField
  *   id="username"
  *   label="ユーザー名"
  *   type="text"
  *   placeholder="ユーザー名を入力"
  *   defaultValue=""
- * />
- *
- * // 制御コンポーネントとして使用
- * const [password, setPassword] = useState("");
- * <InputField
- *   id="password"
- *   label="パスワード"
- *   type="password"
- *   value={password}
- *   onChange={(e) => setPassword(e.target.value)}
- *   isHorizontal={true}
- *   errorMsg={password.length < 8 ? ["8文字以上で入力してください"] : []}
  * />
  * ```
  */

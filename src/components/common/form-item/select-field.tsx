@@ -53,7 +53,6 @@ interface SelectFieldProps {
  * ## 機能
  * - `items` 配列に基づいて、選択肢を動的に生成します。
  * - ラベルと入力欄の縦横レイアウト切り替えに対応しています。
- * - 制御コンポーネントと非制御コンポーネントの両方のモードをサポートします。
  * - エラーメッセージ表示をサポートします。
  *
  * ## 依存関係
@@ -67,7 +66,6 @@ interface SelectFieldProps {
  *   { selectId: "banana", label: "バナナ" },
  * ];
  *
- * // 非制御コンポーネントとして使用
  * <SelectField
  *   id="fruit"
  *   label="果物"
