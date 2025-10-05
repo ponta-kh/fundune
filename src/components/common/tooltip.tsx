@@ -21,6 +21,32 @@ export interface TooltipProps {
     className?: string;
 }
 
+/**
+ * @component Tooltip
+ * @description ホバー時に補足情報を表示するためのツールチップコンポーネントです。
+ *
+ * ## 機能
+ * - `children` に指定した要素にホバーすると、`content` の内容がツールチップとして表示されます。
+ * - 表示位置（`side`）、アライメント（`align`）、オフセットなどを細かく調整できます。
+ *
+ * ## 依存関係
+ * このコンポーネントは `shadcn/ui` の `Tooltip` 関連コンポーネントに依存しています。
+ *
+ * ## 使い方
+ * - `children` にトリガーとなる要素を配置し、`content` に表示したい内容を渡します。
+ *
+ * @example
+ * ```tsx
+ * import { Tooltip } from "./tooltip";
+ * import { Button } from "@/components/shadcn/button";
+ *
+ * const MyTooltip = () => (
+ *   <Tooltip content="これはツールチップです">
+ *     <Button variant="outline">ホバーしてね</Button>
+ *   </Tooltip>
+ * );
+ * ```
+ */
 export function Tooltip({
     content,
     children,

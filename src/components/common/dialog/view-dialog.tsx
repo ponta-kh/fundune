@@ -90,7 +90,7 @@ export function ViewDialog({
 
     return (
         <ShadcnDialog open={open} onOpenChange={setOpen}>
-            {title && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+            {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
             <DialogContent className={contentClassName}>
                 {(title || description) && (
                     <DialogHeader className={headerClassName}>

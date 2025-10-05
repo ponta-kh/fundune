@@ -52,17 +52,27 @@ export interface FormDialogProps {
  *
  * @example
  * ```tsx
- * import { ViewDialog } from "./view-dialog";
+ * import { FormDialog } from "./form-dialog";
  * import { Button } from "@/components/shadcn/button";
+ * import { Input } from "@/components/shadcn/input";
  *
- * const MyDialog = () => (
- *   <ViewDialog
- *     trigger={<Button>プロフィールを表示</Button>}
- *     title="プロフィール"
- *     description="これがあなたのプロフィール情報です。"
+ * const MyFormDialog = () => (
+ *   <FormDialog
+ *     trigger={<Button>フォームを開く</Button>}
+ *     title="新規作成"
+ *     description="新しい項目を作成します。"
+ *     footerComponent={<Button type="submit" form="my-form">保存</Button>}
  *   >
- *     <p>ここに名前やメールアドレスなどの詳細情報が表示されます。</p>
- *   </ViewDialog>
+ *     {({ setOpen }) => (
+ *       <form id="my-form" onSubmit={(e) => {
+ *         e.preventDefault();
+ *         console.log("submitting");
+ *         setOpen(false);
+ *       }}>
+ *         <Input placeholder="項目名" />
+ *       </form>
+ *     )}
+ *   </FormDialog>
  * );
  * ```
  */
