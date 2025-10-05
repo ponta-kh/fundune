@@ -7,7 +7,6 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
-import prettierPlugin from "eslint-plugin-prettier";
 
 export default defineConfig([
     globalIgnores(["dist", "storybook-static"]),
@@ -19,12 +18,6 @@ export default defineConfig([
             reactHooks.configs["recommended-latest"],
             reactRefresh.configs.vite,
         ],
-        plugins: {
-            prettier: prettierPlugin,
-        },
-        rules: {
-            "prettier/prettier": "error", // Prettier違反をESLintでエラーに
-        },
         languageOptions: {
             ecmaVersion: 2020,
             globals: globals.browser,

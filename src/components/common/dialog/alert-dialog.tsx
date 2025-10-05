@@ -14,13 +14,13 @@ export interface AlertDialogProps {
     /** ダイアログを開くためのトリガー要素。 */
     trigger: React.ReactNode;
     /** ダイアログのヘッダーに表示するタイトル。 */
-    title: string;
+    title?: string;
     /** タイトルの下に表示する補足説明（任意）。 */
     description?: string;
     /** キャンセルボタンのテキスト。 */
     cancelLabel?: string;
     /** 続行ボタンのテキスト。 */
-    actionLabel: string;
+    actionLabel?: string;
     /** `AlertDialogContent` コンポーネントに適用するCSSクラス。 */
     contentClassName?: string;
     /** `AlertDialogHeader` コンポーネントに適用するCSSクラス。 */
@@ -73,8 +73,8 @@ export function AlertDialog({
     trigger,
     title,
     description,
-    cancelLabel = "Cancel",
-    actionLabel,
+    cancelLabel = "キャンセル",
+    actionLabel = "処理実行",
     contentClassName,
     headerClassName,
     titleClassName,
@@ -88,16 +88,18 @@ export function AlertDialog({
         <ShadcnAlertDialog>
             <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
             <AlertDialogContent className={contentClassName}>
-                <AlertDialogHeader className={headerClassName}>
-                    {title && (
-                        <AlertDialogTitle className={titleClassName}>{title}</AlertDialogTitle>
-                    )}
-                    {description && (
-                        <AlertDialogDescription className={descriptionClassName}>
-                            {description}
-                        </AlertDialogDescription>
-                    )}
-                </AlertDialogHeader>
+                {(title || description) && (
+                    <AlertDialogHeader className={headerClassName}>
+                        {title && (
+                            <AlertDialogTitle className={titleClassName}>{title}</AlertDialogTitle>
+                        )}
+                        {description && (
+                            <AlertDialogDescription className={descriptionClassName}>
+                                {description}
+                            </AlertDialogDescription>
+                        )}
+                    </AlertDialogHeader>
+                )}
                 <AlertDialogFooter className={footerClassName}>
                     <AlertDialogCancel className={cancelButtonClassName}>
                         {cancelLabel}

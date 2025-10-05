@@ -36,8 +36,6 @@ export interface ViewDialogProps {
     footerClassName?: string;
     /** 閉じるボタンに適用するCSSクラス。 */
     closeButtonClassName?: string;
-    /** 閉じるボタンのバリアント。デフォルトは "secondary"。 */
-    closeButtonVariant?: "primary" | "secondary" | "destructive" | "outline" | "ghost";
     /** 閉じるボタンのテキスト。デフォルトは "Close"。 */
     closeButtonText?: string;
 }
@@ -86,7 +84,6 @@ export function ViewDialog({
     descriptionClassName,
     footerClassName,
     closeButtonClassName,
-    closeButtonVariant = "secondary",
     closeButtonText = "閉じる",
 }: ViewDialogProps) {
     const [open, setOpen] = useState(isInitiallyOpen);
@@ -108,7 +105,7 @@ export function ViewDialog({
                 {children}
                 <DialogFooter className={footerClassName}>
                     <DialogClose asChild>
-                        <Button variant={closeButtonVariant} className={closeButtonClassName}>
+                        <Button variant="secondary" className={closeButtonClassName}>
                             {closeButtonText}
                         </Button>
                     </DialogClose>
