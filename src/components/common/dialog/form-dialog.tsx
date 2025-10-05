@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useState } from "react";
 import {
     Dialog as ShadcnDialog,
     DialogContent,
@@ -9,25 +9,17 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-    DialogClose,
 } from "@/components/shadcn/dialog";
-import { Button } from "@/components/shadcn/button";
 
-interface ActionState<T> {
-    data: T | null;
-    success: boolean;
-    messages: Record<string, string[]>;
-}
-
-export interface FormDialogProps<T> {
+export interface FormDialogProps {
     /** ダイアログを開くためのトリガー要素。 */
     trigger: React.ReactNode;
     /** ダイアログのヘッダーに表示するタイトル。 */
     title?: string;
     /** タイトルの下に表示する補足説明（任意）。 */
     description?: string;
-    /** ダイアログのメインコンテンツとして表示する要素。 */
-    children: React.ReactNode;
+    /** ダイアログのメインコンテンツとして表示する要素。setOpenを受け取る関数を指定します。 */
+    children: (props: { setOpen: (open: boolean) => void }) => React.ReactNode;
     /** `DialogContent` コンポーネントに適用するCSSクラス。 */
     contentClassName?: string;
     /** `DialogHeader` コンポーネントに適用するCSSクラス。 */
@@ -38,22 +30,8 @@ export interface FormDialogProps<T> {
     descriptionClassName?: string;
     /** `DialogFooter` コンポーネントに適用するCSSクラス。 */
     footerClassName?: string;
-    /** フォームのサブミット時に実行されるサーバアクション。 */
-    formBodyAction: (prevState: ActionState<T>, formData: FormData) => Promise<ActionState<T>>;
-    /** 初期値 */
-    initialState: ActionState<T>;
-    /** サブミットボタンに適用するCSSクラス。 */
-    submitButtonClassName?: string;
-    /** サブミットボタンのバリアント。デフォルトは "primary"。 */
-    submitButtonVariant?: "primary" | "secondary" | "destructive" | "outline" | "ghost";
-    /** サブミットボタンのテキスト。デフォルトは "サブミット"。 */
-    submitButtonText?: string;
-    /** 閉じるボタンに適用するCSSクラス。 */
-    cancelButtonClassName?: string;
-    /** 閉じるボタンのバリアント。デフォルトは "secondary"。 */
-    cancelButtonVariant?: "primary" | "secondary" | "destructive" | "outline" | "ghost";
-    /** 閉じるボタンのテキスト。デフォルトは "キャンセル"。 */
-    cancelButtonText?: string;
+    /** ダイアログのフッターに設置するコンポーネント要素。 */
+    footerComponent?: React.ReactNode;
 }
 
 /**
@@ -88,7 +66,7 @@ export interface FormDialogProps<T> {
  * );
  * ```
  */
-export function FormDialog<T>({
+export function FormDialog({
     trigger,
     title,
     description,
@@ -98,61 +76,28 @@ export function FormDialog<T>({
     titleClassName,
     descriptionClassName,
     footerClassName,
-    formBodyAction,
-    initialState,
-    submitButtonClassName,
-    submitButtonVariant = "primary",
-    submitButtonText = "サブミット",
-    cancelButtonClassName,
-    cancelButtonVariant = "secondary",
-    cancelButtonText = "キャンセル",
-}: FormDialogProps<T>) {
+    footerComponent,
+}: FormDialogProps) {
     const [open, setOpen] = useState(false);
-
-    const [state, formAction, isPending] = useActionState(formBodyAction, initialState);
-
-    useEffect(() => {
-        if (state.success) {
-            setOpen(false);
-        }
-    }, [state]);
 
     return (
         <ShadcnDialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent className={contentClassName}>
-                <form action={formAction}>
-                    {(title || description) && (
-                        <DialogHeader className={headerClassName}>
-                            {title && <DialogTitle className={titleClassName}>{title}</DialogTitle>}
-                            {description && (
-                                <DialogDescription className={descriptionClassName}>
-                                    {description}
-                                </DialogDescription>
-                            )}
-                        </DialogHeader>
-                    )}
-                    {children}
-                    <DialogFooter className={footerClassName}>
-                        <Button
-                            variant={submitButtonVariant}
-                            className={submitButtonClassName}
-                            type="submit"
-                            disabled={isPending}
-                        >
-                            {submitButtonText}
-                        </Button>
-                        <DialogClose asChild>
-                            <Button
-                                variant={cancelButtonVariant}
-                                className={cancelButtonClassName}
-                                disabled={isPending}
-                            >
-                                {cancelButtonText}
-                            </Button>
-                        </DialogClose>
-                    </DialogFooter>
-                </form>
+                {(title || description) && (
+                    <DialogHeader className={headerClassName}>
+                        {title && <DialogTitle className={titleClassName}>{title}</DialogTitle>}
+                        {description && (
+                            <DialogDescription className={descriptionClassName}>
+                                {description}
+                            </DialogDescription>
+                        )}
+                    </DialogHeader>
+                )}
+                {children({ setOpen })}
+                {footerComponent && (
+                    <DialogFooter className={footerClassName}>{footerComponent}</DialogFooter>
+                )}
             </DialogContent>
         </ShadcnDialog>
     );
