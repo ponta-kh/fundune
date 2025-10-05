@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Dialog as ShadcnDialog,
     DialogContent,
@@ -9,10 +11,13 @@ import {
     DialogClose,
 } from "@/components/shadcn/dialog";
 import { Button } from "@/components/shadcn/button";
+import { useState } from "react";
 
 export interface ViewDialogProps {
     /** ダイアログを開くためのトリガー要素。 */
-    trigger: React.ReactNode;
+    trigger?: React.ReactNode;
+    /** ダイアログを画面描画時に表示するかどうか。デフォルトはfalse。 */
+    isInitiallyOpen?: boolean;
     /** ダイアログのヘッダーに表示するタイトル。 */
     title?: string;
     /** タイトルの下に表示する補足説明（任意）。 */
@@ -39,7 +44,7 @@ export interface ViewDialogProps {
 
 /**
  * @component ViewDialog
- * @description ユーザーに追加情報やアクションを求めるための汎用的なモーダルダイアログです。
+ * @description 情報表示用の汎用的なモーダルダイアログです。
  *
  * ## 機能
  * - トリガー、ヘッダー、コンテンツを簡単に設定できます。
@@ -71,6 +76,7 @@ export interface ViewDialogProps {
  */
 export function ViewDialog({
     trigger,
+    isInitiallyOpen = false,
     title,
     description,
     children,
@@ -81,11 +87,13 @@ export function ViewDialog({
     footerClassName,
     closeButtonClassName,
     closeButtonVariant = "secondary",
-    closeButtonText = "Close",
+    closeButtonText = "閉じる",
 }: ViewDialogProps) {
+    const [open, setOpen] = useState(isInitiallyOpen);
+
     return (
-        <ShadcnDialog>
-            <DialogTrigger asChild>{trigger}</DialogTrigger>
+        <ShadcnDialog open={open} onOpenChange={setOpen}>
+            {title && <DialogTrigger asChild>{trigger}</DialogTrigger>}
             <DialogContent className={contentClassName}>
                 {(title || description) && (
                     <DialogHeader className={headerClassName}>
