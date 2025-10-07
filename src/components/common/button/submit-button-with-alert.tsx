@@ -2,7 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/shadcn/button";
-import { AlertDialog, type AlertDialogProps } from "@/dialog";
+import { AlertDialog, type AlertDialogProps } from "@/components/common/dialog/alert-dialog";
 
 interface SubmitButtonWithAlertProps extends Omit<AlertDialogProps, "trigger"> {
     /** トリガーボタンの表示内容 */
