@@ -11,6 +11,8 @@ interface SubmitButtonProps {
     loadingContent?: string;
     /** 送信中かどうか。親コンポーネントのuseACtionStateとの併用を前提としているため、propsで取得する */
     isPending?: boolean;
+    /** トリガーボタンのバリアント。未指定の場合は"success" */
+    variant?: "success" | "warning" | "destructive";
     /** 追加のCSSクラス */
     className?: string;
     /** formのid属性。ボタンがform内にない場合にformと紐づけるために設定が必要 */
@@ -29,6 +31,7 @@ export default function SubmitButton({
     children,
     loadingContent = "処理中...",
     isPending,
+    variant = "success",
     className,
     formId,
 }: SubmitButtonProps) {
@@ -40,7 +43,7 @@ export default function SubmitButton({
         <Button
             type="submit"
             disabled={isDisabled}
-            variant="success"
+            variant={variant}
             className={className}
             form={formId}
         >

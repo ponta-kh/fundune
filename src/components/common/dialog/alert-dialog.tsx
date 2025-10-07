@@ -104,7 +104,11 @@ export function AlertDialog({
                     <AlertDialogCancel className={cancelButtonClassName}>
                         {cancelLabel}
                     </AlertDialogCancel>
-                    <AlertDialogAction className={actionButtonClassName} form={formId}>
+                    <AlertDialogAction
+                        type="submit"
+                        className={actionButtonClassName}
+                        form={formId}
+                    >
                         {actionLabel}
                     </AlertDialogAction>
                 </AlertDialogFooter>
